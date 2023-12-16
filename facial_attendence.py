@@ -49,13 +49,21 @@ while True:
         face_locations = face_recognition.face_locations(rgb_small_frame)
         face_encodings = face_recognition.face_encodings(rgb_small_frame,face_locations)
         face_names = []
-        for face_encoding in face_encodings:
+        for (top, right, bottom, left), face_encoding in zip(face_locations, face_encodings):
+            
+        #for face_encoding in face_encodings:
             matches = face_recognition.compare_faces(known_face_encoding,face_encoding)
             name = ""
             face_distance = face_recognition.face_distance(known_face_encoding,face_encoding)
             best_match_index = np.argmin(face_distance)
             if matches[best_match_index]:
                 name = known_faces_name[ best_match_index]
+
+                # Draw a bounding box around the face
+                cv2.rectangle(frame, (left, top), (right, bottom), (0, 255, 0), 2)
+
+                # Add a label with the recognized name
+                cv2.putText(frame, name, (left, top - 6), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (0, 255, 0), 2)
 
             # Writing data to CSV fie
 
