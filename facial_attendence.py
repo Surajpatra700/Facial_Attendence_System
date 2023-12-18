@@ -7,26 +7,49 @@ from datetime import datetime
 
 video_capture = cv2.VideoCapture(0)
 
-elon_image = face_recognition.load_image_file("Photos/elon.jpeg")
-elon_encoding = face_recognition.face_encodings(elon_image)[0]
+photos_directory = "Photos"
 
-dhoni_image = face_recognition.load_image_file("Photos/dhoni.jpg")
-dhoni_encoding = face_recognition.face_encodings(dhoni_image)[0]
+known_face_encoding = []
+known_faces_name = []
 
-jeff_image = face_recognition.load_image_file("Photos/jeff.jpg")
-jeff_encoding = face_recognition.face_encodings(jeff_image)[0]
+# Load images and encodings from files in the "Photos" directory
+for filename in os.listdir(photos_directory):
+    image_path = os.path.join(photos_directory, filename)
+    image = face_recognition.load_image_file(image_path)
+    encoding = face_recognition.face_encodings(image)[0]
+    known_face_encoding.append(encoding)
+    known_faces_name.append(filename.split(".")[0])  # Assuming filenames don't contain periods before extension
 
-known_face_encoding = [
-    elon_encoding,
-    dhoni_encoding,
-    jeff_encoding
-]
+# elon_image = face_recognition.load_image_file("Photos/elon.jpeg")
+# elon_encoding = face_recognition.face_encodings(elon_image)[0]
 
-known_faces_name = [
-    "Elon Musk",
-    "Ms Dhoni",
-    "Jeff Bezos"
-]
+# dhoni_image = face_recognition.load_image_file("Photos/dhoni.jpg")
+# dhoni_encoding = face_recognition.face_encodings(dhoni_image)[0]
+
+# jeff_image = face_recognition.load_image_file("Photos/jeff.jpg")
+# jeff_encoding = face_recognition.face_encodings(jeff_image)[0]
+
+# suraj_image = face_recognition.load_image_file("Photos/suraj.jpg")
+# suraj_encoding = face_recognition.face_encodings(suraj_image)[0]
+
+# soyam_image = face_recognition.load_image_file("Photos/soyam.jpeg")
+# soyam_encoding = face_recognition.face_encodings(soyam_image)[0]
+
+# known_face_encoding = [
+#     elon_encoding,
+#     dhoni_encoding,
+#     jeff_encoding,
+#     suraj_encoding,
+#     soyam_encoding
+# ]
+
+# known_faces_name = [
+#     "Elon Musk",
+#     "Ms Dhoni",
+#     "Jeff Bezos",
+#     "Suraj Patra",
+#     "Soyam Patra"
+# ]
 
 students = known_faces_name.copy()
 
